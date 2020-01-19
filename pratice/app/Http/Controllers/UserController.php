@@ -37,7 +37,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'role' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
 
         $user = new User();
@@ -78,7 +78,8 @@ class UserController extends Controller
 
     public function delete($id)
     {
-        Post::find()->delete();
+        $user = User::destroy($id);
+
         return \redirect('/user');
     }
 }
