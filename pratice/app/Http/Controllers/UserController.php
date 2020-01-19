@@ -9,6 +9,15 @@ class UserController extends Controller
 {
     //
 
+    // public function validatio($request)
+    // {
+    //     $valied = $request->validate([
+    //         'name' => ['required', 'string', 'max:255'],
+    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+    //         'password' => ['required', 'string', 'min:8', 'confirmed'],
+    //     ]);
+    // }
+
     public function index()
     {
         $user = User::all();
@@ -21,8 +30,14 @@ class UserController extends Controller
         return view('register');
     }
 
-    public function store()
+    public function store(Request $request)
     {
+
+        $valied = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
 
         $user = new User();
         $user->name = request('name');
@@ -39,10 +54,16 @@ class UserController extends Controller
         return view('useredit',\compact('user'));
     }
 
-    public function update($id)
+    public function update(Request $request, $id)
     {
         // $userid = $request->param('id');
         //return $id;
+        $valied = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
         $user = User::findOrFail($id);
         $user->name = request('name');
         $user->role = request('role');

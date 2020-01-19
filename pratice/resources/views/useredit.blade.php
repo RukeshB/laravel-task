@@ -1,28 +1,36 @@
-<html>
-    <head>
-        <title>Login</title>
-    </head>
-    <body>
+@include('layout.header')
         <form action="{{route('user.update',['id' => $user->id])}}" method="POST">
             @csrf
             @method('PUT')
-        full name: <input type="text" name="name" placeholder="name" value="{{$user->name}}"><br>
 
-            Role: <select name="role">
-                <option value="admin" @if ($user->role == 'admin')
-                    selected
+            <div class="form-group">
+                full name: <input type="text" name="name" placeholder="name" value="{{$user->name}} " class="form-control" id="name" required>
+            </div>
 
-                @endif>Admin</option>
-                <option value="user" @if ($user->role == 'user')
-                    selected
-                    @endif>User</option>
-            </select><br>
+            <div class="form-group">
+                    Role: <select name="role" class="form-control" id="role" required>
+                        <option value="admin" @if ($user->role == 'admin')
+                            selected
 
-            email: <input type="text" name="email" placeholder="email" value="{{$user->email}}"><br>
-        password: <input type="password" name="password" placeholder="password" value="{{$user->password}}"><br>
-            <button type="submit" name="update">update</button>
-            <button type="button"> <a href="/user">Home</a></button>
+                        @endif>Admin</option>
+                        <option value="user" @if ($user->role == 'user')
+                            selected
+                            @endif>User</option>
+                        </select>
+            </div>
+
+            <div class="form-group">
+                email: <input type="text" name="email" placeholder="email" value="{{$user->email}}" class="form-control" id="email" required>
+            </div>
+
+            <div class="form-group">
+                password: <input type="password" name="password" placeholder="password" value="{{$user->password}}" class="form-control" id="password" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" name="update" class="btn-primary">update</button>
+            </div>
+
         </form>
         {{-- <a href="">Home</a> --}}
-    </body>
-    </html>
+@include('layout.footer')

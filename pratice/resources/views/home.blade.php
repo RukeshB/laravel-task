@@ -1,12 +1,4 @@
-<html>
-    <head>
-        <title>Home</title>
-    </head>
-    <body>
-        <ul>
-            <li><a href="{{route('user.create')}}">Register</a></li>
-
-        </ul>
+@include('layout.header')
         <table>
         <tr>
             <th>S.N</th>
@@ -29,5 +21,4 @@
         @endforeach
 
     </table>
-    </body>
-</html>
+@include('layout.footer')

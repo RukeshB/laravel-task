@@ -1,20 +1,29 @@
-<html>
-    <head>
-        <title>Login</title>
-    </head>
-    <body>
-        <form action="/user" method="POST">
+@include('layout.header')
+        <form action="/user" method="POST" onsubmit="return validation()">
             @csrf
-            full name: <input type="text" name="name" placeholder="name"><br>
-            Role: <select name="role">
+            <div class="form-group">
+                full name: <input type="text" name="name" placeholder="name" class="form-control" id="name" required>
+            </div>
+
+            <div class="form-group">
+                Role: <select name="role" class="form-control" id="role" required>
                 <option value="admin">Admin</option>
                 <option value="user">User</option>
-            </select><br>
-            email: <input type="text" name="email" placeholder="email"><br>
-            password: <input type="password" name="password" placeholder="password"><br>
-            <button type="submit" name="register">register</button>
-            <button type="button"> <a href="/user">Home</a></button>
+                </select>
+            </div>
+
+            <div class="form-group">
+                email: <input type="text" name="email" placeholder="email" class="form-control" id="email" required>
+            </div>
+
+            <div class="form-group">
+                password: <input type="password" name="password" placeholder="password" class="form-control" id="password" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" name="register" class="btn-primary" >register</button>
+            </div>
+
         </form>
         {{-- <a href="">Home</a> --}}
-    </body>
-    </html>
+@include('layout.footer')
