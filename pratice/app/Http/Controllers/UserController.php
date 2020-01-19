@@ -35,6 +35,7 @@ class UserController extends Controller
 
         $valied = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'role' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -60,6 +61,7 @@ class UserController extends Controller
         //return $id;
         $valied = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'role' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -76,7 +78,7 @@ class UserController extends Controller
 
     public function delete($id)
     {
-        User::destroy($id);
+        Post::find()->delete();
         return \redirect('/user');
     }
 }
