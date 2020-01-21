@@ -1,5 +1,7 @@
-@include('layout.header')
-        <form action="{{route('user.update',['id' => $user->id])}}" method="POST">
+@extends('layouts.app')
+
+@section('content')
+        <form action="{{route('home.update',['id' => $user->id])}}" method="POST">
             @csrf
             @method('PUT')
 
@@ -24,13 +26,10 @@
             </div>
 
             <div class="form-group">
-                password: <input type="password" name="password" placeholder="password" value="{{$user->password}}" class="form-control" id="password" required>
-            </div>
-
-            <div class="form-group">
                 <button type="submit" name="update" class="btn-primary">update</button>
             </div>
 
         </form>
+        @endsection
         {{-- <a href="">Home</a> --}}
 @include('layout.footer')

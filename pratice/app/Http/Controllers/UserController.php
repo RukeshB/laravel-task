@@ -21,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         $user = User::all();
-        return view('home',\compact('user'));
+        return view('index',\compact('user'));
     }
 
     public function create()
@@ -35,16 +35,15 @@ class UserController extends Controller
 
         $valied = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'role' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
         $user = new User();
         $user->name = request('name');
         $user->role = request('role');
         $user->email = request('email');
-        $user->password = request('password');
+        $user->password = Hash::make(request('password')) ;
         $user->save();
         return \redirect('/user');
     }
@@ -61,7 +60,6 @@ class UserController extends Controller
         //return $id;
         $valied = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'role' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -70,7 +68,6 @@ class UserController extends Controller
         $user->name = request('name');
         $user->role = request('role');
         $user->email = request('email');
-        $user->password = request('password');
         $user->save();
         // $user = User::where('id', '=', $id)->update();
         return \redirect('/user');
@@ -78,8 +75,7 @@ class UserController extends Controller
 
     public function delete($id)
     {
-        $user = User::destroy($id);
-
+        User::destroy($id);
         return \redirect('/user');
     }
 }

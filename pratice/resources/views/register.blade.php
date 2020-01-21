@@ -1,4 +1,6 @@
-@include('layout.header')
+@extends('layouts.app')
+
+@section('content')
         <form action="/user" method="POST" onsubmit="return validation()">
             @csrf
             <div class="form-group">
@@ -25,5 +27,6 @@
             </div>
 
         </form>
+@endsection
         {{-- <a href="">Home</a> --}}
 @include('layout.footer')

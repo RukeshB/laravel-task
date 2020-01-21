@@ -1,7 +1,6 @@
 @extends('layouts.app')
-
 @section('content')
-<table>
+        <table>
         <tr>
             <th>S.N</th>
             <th>Name</th>
@@ -17,8 +16,8 @@
             <td>{{$u->name}}</td>
             <td>{{$u->role}}</td>
             <td>{{$u->email}}</td>
-            <td><a href="{{route('home.edit',['id' => $u->id])}}">Edit</a>
-                <a href="{{route('home.delete',['id' => $u->id])}}">Delete</a></td>
+            <td><a href="{{route('user.edit',['id' => $u->id])}}">Edit</a>
+                <a href="{{route('user.delete',['id' => $u->id])}}">Delete</a></td>
             </tr>
         @endforeach
 
