@@ -15,7 +15,7 @@ class AddLastLoginColumnInUserTbl extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->dateTime('last_login');
+            $table->dateTime('last_login')->nullable();
         });
     }
 

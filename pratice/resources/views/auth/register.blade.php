@@ -8,8 +8,23 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
+
+                        <div class="form-group row">
+                            {{-- <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label> --}}
+                            <img src="" alt="" id="photo" class="img-thumbnail">
+
+                            <div class="col-md-6">
+                                <input type="file" name="photo" onchange="displayPhoto(this)">
+
+                                @error('photo')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
@@ -26,6 +41,43 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
+
+                            <div class="col-md-6">
+                                <select name="gender" class="form-control" id="gender" required>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+
+                                @error('gender')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="dob" class="col-md-4 col-form-label text-md-right">{{ __('Date Of Birth') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="dob" type="date" class="form-control" name="dob" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="location_id" class="col-md-4 col-form-label text-md-right">{{ __('Location') }}</label>
+
+                            <div class="col-md-6">
+                                <select name="location_id" class="form-control" id="location_id" required>
+                                    @foreach ($location as $l)
+                                        <option value="{{$l->id}}">{{$l->city.', '.$l->street}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
 
                             <div class="col-md-6">
@@ -34,7 +86,7 @@
                                     <option value="user">User</option>
                                 </select>
 
-                                @error('email')
+                                @error('role')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -91,4 +143,20 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+                function displayPhoto(ele){
+                  console.log(ele.value);
+                  if (ele.files && ele.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $('#photo')
+                                .attr('src', e.target.result)
+                                 .width(128)
+                                .height(150);
+                        };
+
+                        reader.readAsDataURL(ele.files[0]);
+                    }
+                }
+                </script>
 @endsection

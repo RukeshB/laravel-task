@@ -53,6 +53,9 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <img src="@if(Auth::user()->image!=null) {{asset(Auth::user()->image)}} @endif
+                            @if(Auth::user()->image==null) {{asset('uploads/image/avater/pngtree-web-page-ui-default-avatar-handsome-guy-png-image_344498.jpg')}} @endif"
+                            alt="" class="rounded-circle" style="width:30px">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 

@@ -8,7 +8,10 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Location;
 class RegisterController extends Controller
 {
     /*
@@ -66,10 +69,54 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
+            'image'=>'aaa',
             'name' => $data['name'],
-            'role' => $data['role'],
+            'dob'=>$data['dob'],
+            'location_id'=>$data['location'],
+            'gender'=>$data['gender'],
+            'role' => 'user',
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+     public function showRegistrationForm()
+    {
+       // $location = new Location();
+        $location = Location::all();
+        //dd($location);
+        return view('auth.register',compact('location'));
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $user= new User;
+
+        if($request->hasfile('photo'))
+        {
+            $file = $request->file('photo');
+            $extension = $file->getClientOriginalExtension(); //get image extension
+            $filename = time().'.'.$extension;
+            $file->move('uploads/image/avater/',$filename);
+            $user->image = 'uploads/image/avater/'.$filename;
+        }
+
+        //dd($request);
+
+        $user->name = request('name');
+        $user->dob = request('dob');
+        $user->gender = request('gender');
+        $user->loctaion_id = request('location_id');
+        $user->role = 'user';
+        $user->email = request('email');
+        $user->password= Hash::make(\request('password'));
+        $user->save();
+
+        $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+                        ?: redirect($this->redirectPath());
     }
 }
