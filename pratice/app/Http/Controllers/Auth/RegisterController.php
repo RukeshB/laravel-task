@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\Location;
 class RegisterController extends Controller
 {
@@ -99,9 +100,13 @@ class RegisterController extends Controller
         if($request->hasfile('photo'))
         {
             $file = $request->file('photo');
+            // $thumbnails = Image::make($file->getRealPath())->resize(100, 100);
+            // $thumbnails= Image::make($file->resize(100, 100));
             $extension = $file->getClientOriginalExtension(); //get image extension
             $filename = time().'.'.$extension;
             $file->move('uploads/image/avater/',$filename);
+            //$thumbnails->move('uploads/image/avater/thumb/',$filename);
+            // $thumbnails->save(public_path('uploads/image/avater/thumb' .$filename));
             $user->image = 'uploads/image/avater/'.$filename;
         }
 

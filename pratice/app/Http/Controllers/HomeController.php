@@ -27,11 +27,15 @@ class HomeController extends Controller
      */
     public function index()
     {
+        return view('welcome');
+        // $user = User::all();
+        // return view('home',\compact('user'));
+    }
+
+    public function all()
+    {
         $user = User::all();
-        $now = Carbon::now();
-        //dd($user['last_login']);
-        return view('home',\compact('user','now'));
-        //dd(Carbon::now());
+        return view('home',\compact('user'));
     }
 
     public function edit($id)

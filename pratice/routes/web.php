@@ -24,6 +24,7 @@ Auth::routes();
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/list', 'HomeController@all')->name('home.list');
 Route::get('/home/setting', 'HomeController@setting')->name('setting');
 Route::post('/home/change', 'HomeController@change')->name('change');
 
