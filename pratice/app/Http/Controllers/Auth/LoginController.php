@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -28,13 +32,26 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+
+
     /**
-     * Create a new controller instance.
+     * Log the user out of the application.
      *
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function __construct()
+    public function logout(Request $request)
     {
-        $this->middleware('guest')->except('logout');
+        $user = User::find(Auth::user()->id);
+        $user->last_login = Carbon::now();
+        $user->save();
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return $this->loggedOut($request) ?: redirect('/login');
     }
 }

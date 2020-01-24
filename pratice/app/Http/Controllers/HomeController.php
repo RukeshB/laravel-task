@@ -28,7 +28,9 @@ class HomeController extends Controller
     public function index()
     {
         $user = User::all();
-        return view('home',\compact('user'));
+        $now = Carbon::now();
+        //dd($user['last_login']);
+        return view('home',\compact('user','now'));
         //dd(Carbon::now());
     }
 
