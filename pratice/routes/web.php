@@ -30,4 +30,5 @@ Route::post('/home/change', 'HomeController@change')->name('change');
 
 Route::get('/home/{id}/edit', 'HomeController@edit')->name('home.edit');
 Route::put('/home/{id}', 'HomeController@update')->name('home.update');
-Route::get('/home/{id}/delete', 'HomeController@delete')->name('home.delete');
+Route::get('/home/{id}/{role}', 'HomeController@role')->name('home.update.role');
+Route::get('/home/delete/{id}', 'HomeController@delete')->name('home.delete');

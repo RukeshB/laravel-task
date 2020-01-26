@@ -67,6 +67,11 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
+                                    {{-- profile --}}
+                                    <a class="dropdown-item" href="{{ route('setting') }}">
+                                        {{ __('profile') }}
+                                    </a>
+
                                     {{-- setting --}}
                                     <a class="dropdown-item" href="{{ route('setting') }}">
                                         {{ __('setting') }}

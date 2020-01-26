@@ -17,8 +17,16 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role == "admin";
+        // return $user->role_id->name == "admin";
         //
+
+        if($user->hasAccess('view_user'))
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
@@ -52,9 +60,16 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function update(User $user, User $model)
+    public function update(User $user)
     {
         //
+        if($user->hasAccess('edit_user'))
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
@@ -66,7 +81,13 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        if($user->hasAccess('delate_user'))
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**

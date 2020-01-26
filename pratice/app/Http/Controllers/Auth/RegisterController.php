@@ -77,7 +77,7 @@ class RegisterController extends Controller
             'dob'=>$data['dob'],
             'location_id'=>$data['location'],
             'gender'=>$data['gender'],
-            'role' => 'user',
+            'role_id' => 3,
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
@@ -116,7 +116,7 @@ class RegisterController extends Controller
         $user->dob = request('dob');
         $user->gender = request('gender');
         $user->loctaion_id = request('location_id');
-        $user->role = 'user';
+        $user->role_id = 3;
         $user->email = request('email');
         $user->password= Hash::make(\request('password'));
         $user->save();

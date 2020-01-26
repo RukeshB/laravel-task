@@ -41,4 +41,23 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Location','loctaion_id','id');
     }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function hasAccess($permission)
+    {
+        foreach($this->role->permission as $p)
+        {
+            if($p->name == $permission)
+            {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
 }

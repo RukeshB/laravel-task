@@ -24,11 +24,17 @@
                 <td>{{$u->name}}</td>
                 <td>{{$u->gender}}</td>
                 <td>{{$u->dob}}</td>
-                <td>{{$u->role}}</td>
+                <td>{{$u->role->name}}</td>
                 <td>{{$u->email}}</td>
                 <td>{{\Carbon\Carbon::parse($u->last_login)->diffForHumans()}}</td>
-                <td><a href="{{route('home.edit',['id' => $u->id])}}">Edit</a>
-                    <a href="{{route('home.delete',['id' => $u->id])}}">Delete</a></td>
+                <td>
+                    {{-- <a href="{{route('home.edit',['id' => $u->id])}}">Edit</a> --}}
+                    {{-- @can('update', App\User::class) --}}
+                        <a href="{{route('home.edit',['id' => $u->id])}}">Edit</a>
+                    {{-- @endcan --}}
+
+                    <a href="{{route('home.delete',['id' => $u->id])}}">Delete</a>
+                </td>
             </tr>
             @php($i++)
             @endif

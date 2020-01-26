@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Location;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -15,9 +16,11 @@ class HomeController extends Controller
      *
      * @return void
      */
+
     public function __construct()
     {
         $this->middleware('auth');
+
     }
 
     /**
@@ -35,13 +38,28 @@ class HomeController extends Controller
     public function all()
     {
         $user = User::all();
-        return view('home',\compact('user'));
+        $authUser = Auth::user();
+
+        if($authUser->can('viewAny',$authUser)){
+            return view('home',\compact('user'));
+        }
+        else{
+            return 'restricted';
+        }
+
     }
 
     public function edit($id)
     {
         $user = User::find($id);
-        return view('useredit',\compact('user'));
+        $location = Location::all();
+        $authUser = Auth::user();
+        if($authUser->can('update',$authUser)){
+            return view('useredit',\compact('user','location'));
+        }
+        else{
+            return 'restricted';
+        }
     }
 
     public function update(Request $request, $id)
@@ -63,11 +81,39 @@ class HomeController extends Controller
         return \redirect('/home');
     }
 
+    public function role(Request $request, $id, $role)
+    {
+        $user = User::findOrFail($id);
+
+        if($role == 'admin')
+        {
+            $user->role = 'user';
+        }
+
+        elseif($role == 'user')
+        {
+            $user->role = 'admin';
+        }
+        $user->save();
+        // $user = User::where('id', '=', $id)->update();
+        return \redirect()->route('home.list');
+    }
+
     public function delete($id)
     {
-        User::destroy($id);
-        return \redirect('/home');
+        dd($id);
+        $authUser = Auth::user();
+        if($authUser->can('delete',$authUser)){
+
+
+            User::destroy($id);
+            return \redirect('/home');
+        }
+        else{
+            return 'restricted';
+        }
     }
+
 
     public function setting()
     {
