@@ -29,9 +29,9 @@
                 <td>{{\Carbon\Carbon::parse($u->last_login)->diffForHumans()}}</td>
                 <td>
                     {{-- <a href="{{route('home.edit',['id' => $u->id])}}">Edit</a> --}}
-                    {{-- @can('update', App\User::class) --}}
+                    @can('update', App\User::class)
                         <a href="{{route('home.edit',['id' => $u->id])}}">Edit</a>
-                    {{-- @endcan --}}
+                    @endcan
 
                     <a href="{{route('home.delete',['id' => $u->id])}}">Delete</a>
                 </td>

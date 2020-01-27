@@ -44,20 +44,30 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
-    public function hasAccess($permission)
+    public function hasAccess($permissions)
     {
-        foreach($this->role->permission as $p)
-        {
-            if($p->name == $permission)
-            {
-                return true;
-            }
-            else{
-                return false;
-            }
+
+        if($this->role->permission->contains('name',$permissions)){
+            return true;
         }
+        else{
+            return false;
+        }
+        // foreach($this->role->permission as $p)
+        // {
+        //     dd($p->name, $permission);
+        //     if($p->name == $permission)
+        //     {
+        //         dd("Here");
+        //         return true;
+        //     }
+        //     else{
+        //         dd("Hi");
+        //         return false;
+        //     }
+        // }
     }
 }

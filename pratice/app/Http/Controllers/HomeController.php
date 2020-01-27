@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Location;
+use App\Role;
+use App\Permission;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -106,6 +108,7 @@ class HomeController extends Controller
         if($authUser->can('delete',$authUser)){
 
 
+
             User::destroy($id);
             return \redirect('/home');
         }
@@ -145,5 +148,21 @@ class HomeController extends Controller
         else{
             return redirect()->route('setting')->with('message', 'Invalid Old password');
         }
+    }
+
+    public function showPermission(){
+        $roles = Role::all();
+        $permissions = Permission::all();
+        return view('permissions',compact('roles','permissions'));
+    }
+
+    public function setPermissions(Request $request){
+        //dd($request->permissions);
+        foreach($request->permissions as $role=>$p){
+            $roles =  Role::find($role);
+            $roles->permission()->sync($p);
+        }
+
+        return 'check db';
     }
 }

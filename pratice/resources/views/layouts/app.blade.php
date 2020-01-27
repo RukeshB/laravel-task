@@ -51,6 +51,10 @@
                                 </li>
                             @endif
                         @else
+                                <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('home.permissions') }}">Manage Permissions</a>
+                                </li>
+
                             @can('viewAny', App\User::class)
                                 <li class="nav-item">
                                         <a class="nav-link" href="{{ route('home.list') }}">{{ __('User Detail') }}</a>

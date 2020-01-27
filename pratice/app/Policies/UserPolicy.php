@@ -9,6 +9,27 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
+    public function canAccess(User $user,$permissions)
+    {
+        // foreach($user->role->permission as $p)
+        // {
+        //     dd($p->name, $permission);
+        //     if($p->name == $permission)
+        //     {
+        //         //dd("Here");
+        //         return true;
+        //     }
+        //     else{
+        //         //dd("Hi");
+        //         return false;
+        //     }
+        // }
+        if($user->role->permission->contains('name',$permissions)){
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -19,7 +40,7 @@ class UserPolicy
     {
         // return $user->role_id->name == "admin";
         //
-
+        //dd($user->hasAccess('view_user'));
         if($user->hasAccess('view_user'))
         {
             return true;
@@ -62,7 +83,8 @@ class UserPolicy
      */
     public function update(User $user)
     {
-        //
+
+
         if($user->hasAccess('edit_user'))
         {
             return true;
@@ -70,6 +92,8 @@ class UserPolicy
         else{
             return false;
         }
+
+        //return $this->canAccess($user,'edit_user');
     }
 
     /**
@@ -113,4 +137,6 @@ class UserPolicy
     {
         //
     }
+
+
 }
