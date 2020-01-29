@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container">
         <form action="{{route('home.update',['id' => $user->id])}}" method="POST">
             @csrf
             @method('PUT')
@@ -69,7 +70,10 @@
                             <div class="col-md-6">
                                 <select name="location_id" class="form-control" id="location_id" required>
                                     @foreach ($location as $l)
-                                        <option value="{{$l->id}}">{{$l->city.', '.$l->street}}</option>
+                                        <option value="{{$l->id}}" @if ($user->location_id == $l->id)
+                                            selected
+
+                                        @endif>{{$l->city.', '.$l->street}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -80,15 +84,15 @@
 
                 <div class="col-md-6">
 
+
                     <select name="role" class="form-control" id="role" required>
-                        <option value="admin" @if ($user->role == 'admin')
+                         @foreach ($role as $r)
+                        <option value="{{$r->id}}" @if ($user->role_id == $r->id)
                             selected
 
-                        @endif>Admin</option>
-                        <option value="user" @if ($user->role == 'user')
-                            selected
-                            @endif>User</option>
-                        </select>
+                        @endif>{{$r->name}}</option>
+
+                    @endforeach
                 </div>
 
             </div>
@@ -108,6 +112,7 @@
             </div>
 
         </form>
+</div>
         @endsection
         {{-- <a href="">Home</a> --}}
 @include('layout.footer')

@@ -3,14 +3,20 @@
 
 <form method="POST" action="{{route('home.setpermissions')}}">
     @csrf
-@foreach($roles as $role)
+
 <div>
-    <h2>{{$role->name}}</h2>
+    <select name="role">
+        @foreach($roles as $role)
+            @if($role->name != "super_admin")
+                <option value="{{$role->id}}">{{$role->name}}</option>
+            @endif
+        @endforeach
+    </select>
 </div>
 @foreach ($permissions as $permission)
-<label><input type="checkbox" name="permissions[{{$role->id}}][]" value="{{$permission->id}}" >{{$permission->name}}</label>
+<label><input type="checkbox" name="permissions[]" value="{{$permission->id}}" >{{$permission->name}}</label>
 @endforeach
-@endforeach
+
 
 <button type="submit">Submit</button>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Location;
 use App\Role;
@@ -55,9 +56,10 @@ class HomeController extends Controller
     {
         $user = User::find($id);
         $location = Location::all();
+        $role = Role::all();
         $authUser = Auth::user();
         if($authUser->can('update',$authUser)){
-            return view('useredit',\compact('user','location'));
+            return view('useredit',\compact('user','location','role'));
         }
         else{
             return 'restricted';
@@ -157,11 +159,11 @@ class HomeController extends Controller
     }
 
     public function setPermissions(Request $request){
-        //dd($request->permissions);
-        foreach($request->permissions as $role=>$p){
-            $roles =  Role::find($role);
-            $roles->permission()->sync($p);
-        }
+
+        $r = $request->role;
+        $role = Role::find($r);
+        $role->permission()->sync($request->permissions);
+        dd($request);
 
         return 'check db';
     }
