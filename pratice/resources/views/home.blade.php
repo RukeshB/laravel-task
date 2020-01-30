@@ -32,8 +32,9 @@
                     @can('update', App\User::class)
                         <a href="{{route('home.edit',['id' => $u->id])}}">Edit</a>
                     @endcan
-
+                    @can('delete', App\User::class)
                     <a href="{{route('home.delete',['id' => $u->id])}}">Delete</a>
+                    @endcan
                 </td>
             </tr>
             @php($i++)

@@ -9,27 +9,6 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    public function canAccess(User $user,$permissions)
-    {
-        // foreach($user->role->permission as $p)
-        // {
-        //     dd($p->name, $permission);
-        //     if($p->name == $permission)
-        //     {
-        //         //dd("Here");
-        //         return true;
-        //     }
-        //     else{
-        //         //dd("Hi");
-        //         return false;
-        //     }
-        // }
-        if($user->role->permission->contains('name',$permissions)){
-            return true;
-        }
-        return false;
-    }
-
     /**
      * Determine whether the user can view any models.
      *
@@ -103,7 +82,7 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user)
     {
         if($user->hasAccess('delate_user'))
         {

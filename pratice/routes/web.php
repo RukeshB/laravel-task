@@ -35,3 +35,5 @@ Route::get('/home/{id}/delete', 'HomeController@delete')->name('home.delete');
 
 Route::get('/home/permissions','HomeController@showPermission')->name('home.permissions');
 Route::post('/home/setpermissions','HomeController@setPermissions')->name('home.setpermissions');
+Route::post('/home/task', 'TaskController@store')->name('home.donetask');
+Route::get('/home/task', 'TaskController@create')->name('home.task');

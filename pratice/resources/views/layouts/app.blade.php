@@ -51,6 +51,11 @@
                                 </li>
                             @endif
                         @else
+
+                                <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('home.task') }}">Task</a>
+                                </li>
+
                                 <li class="nav-item">
                                         <a class="nav-link" href="{{ route('home.permissions') }}">Manage Permissions</a>
                                 </li>
