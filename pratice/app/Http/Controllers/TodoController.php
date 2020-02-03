@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Todo;
+use App\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\carbon;
 
-class TaskController extends Controller
+class TodoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +28,9 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('todo');
+        $task = Task::all();
+        $todo = Todo::all();
+        return view('todo',compact('task','todo'));
     }
 
     /**
@@ -38,19 +41,43 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $userid= Auth::User()->id;
-        $del = DB::delete('delete from todo where user_id = ?', [$userid]);
-        foreach($request->task as $task)
+
+        $condition =$request->check;
+        //return \response()->json(['sucess'=>'done']);
+        if($condition == 'true')
         {
-            $todo = new Todo;
+            //return 'save';
+            $userid= Auth::User()->id;
+            $todo = new Todo();
             $todo->user_id = $userid;
-            $todo->task = $task;
-            $todo->status = 1;
+            $todo->task_id = $request->task_id;
+            $todo->status = true;
             $todo->submitted_at = Carbon::now();
             $todo->save();
+            return \response()->json(['sucess'=>'done']);
         }
 
-        dd($todo);
+        // if($request->check === false)
+        else
+        {
+            //return 'delete';
+            //dd('delete');
+            $del = DB::delete('delete from todo where user_id = ? and task_id= ?', [Auth::User()->id,$request->task_id]);
+            return \response()->json(['sucess'=>'done']);
+        }
+
+        // $del = DB::delete('delete from todo where user_id = ?', [$userid]);
+        // foreach($request->task as $task)
+        // {
+        //     $todo = new Todo;
+        //     $todo->user_id = $userid;
+        //     $todo->task = $task;
+        //     $todo->status = 1;
+        //     $todo->submitted_at = Carbon::now();
+        //     $todo->save();
+        // }
+
+        // dd($todo);
     }
 
     /**

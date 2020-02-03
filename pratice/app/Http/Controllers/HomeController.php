@@ -44,6 +44,7 @@ class HomeController extends Controller
         $authUser = Auth::user();
 
         if($authUser->can('viewAny',$authUser)){
+            // return response()->json(['users'=>$user]);
             return view('home',\compact('user'));
         }
         else{
@@ -105,7 +106,7 @@ class HomeController extends Controller
 
     public function delete($id)
     {
-        dd($id);
+        //dd($id);
         $authUser = Auth::user();
         if($authUser->can('delete',$authUser)){
 
