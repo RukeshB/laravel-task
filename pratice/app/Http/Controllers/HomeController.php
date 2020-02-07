@@ -10,6 +10,7 @@ use App\User;
 use App\Location;
 use App\Role;
 use App\Permission;
+use App\Task;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -33,9 +34,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
-        // $user = User::all();
-        // return view('home',\compact('user'));
+        //return view('welcome');
+        $user = User::all();
+        $task = Task::all();
+        return view('welcome',\compact('user','task'));
     }
 
     public function all()
