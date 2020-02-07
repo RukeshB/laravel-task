@@ -52,9 +52,19 @@
                             @endif
                         @else
 
-                                <li class="nav-item">
+                                @if (Auth::user()->role->name != 'super_admin')
+
+                                    <li class="nav-item">
                                         <a class="nav-link" href="{{ route('home.task') }}">Task</a>
-                                </li>
+                                    </li>
+                                    @else
+                                        <li class="nav-item">
+                                        <a class="nav-link" href="{{route('task.showaddtask')}}">Add Task</a>
+                                        </li>
+
+                                @endif
+
+
 
                                 <li class="nav-item">
                                         <a class="nav-link" href="{{ route('home.permissions') }}">Manage Permissions</a>

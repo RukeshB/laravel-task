@@ -80,6 +80,23 @@ class TodoController extends Controller
         // dd($todo);
     }
 
+    public function showaddtask()
+    {
+        $task = Task::all();
+        return view('addtask',\compact('task'));
+    }
+
+    public function addtask(Request $request)
+    {
+
+            $task = new Task();
+            $task->task = $request->task;
+            $task->save();
+
+            return \response()->json(['sucess'=>'done']);
+    }
+
+
     /**
      * Display the specified resource.
      *

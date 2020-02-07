@@ -156,7 +156,8 @@ class HomeController extends Controller
     public function showPermission(){
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('permissions',compact('roles','permissions'));
+        $user = User::all();
+        return view('permissions',compact('roles','permissions','user'));
     }
 
     public function setPermissions(Request $request){
@@ -168,4 +169,10 @@ class HomeController extends Controller
 
         return 'check db';
     }
+
+    // public function getpermission()
+    // {
+    //         return \response()->json(['sucess'=>'done']);
+
+    // }
 }

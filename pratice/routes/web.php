@@ -11,14 +11,6 @@
 |
 */
 
-Route::get('/user', 'UserController@index');
-
-Route::get('/user/signup', 'UserController@create')->name('user.create');
-Route::post('/user', 'UserController@store');
-Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit');
-Route::put('/user/{id}', 'UserController@update')->name('user.update');
-Route::get('/user/{id}/delete', 'UserController@delete')->name('user.delete');
-
 Auth::routes();
 
 
@@ -33,8 +25,14 @@ Route::put('/home/{id}', 'HomeController@update')->name('home.update');
 Route::get('/home/{id}/{role}', 'HomeController@role')->name('home.update.role');
 Route::get('/home/{id}/delete', 'HomeController@delete')->name('home.delete');
 
+
 Route::get('/home/permissions','HomeController@showPermission')->name('home.permissions');
 Route::post('/home/setpermissions','HomeController@setPermissions')->name('home.setpermissions');
+
+
+Route::get('/task/add', 'TodoController@showaddtask')->name('task.showaddtask');
 Route::post('/home/task', 'TodoController@store')->name('home.donetask');
 Route::get('/home/task', 'TodoController@create')->name('home.task');
+
+Route::post('/task/add','TodoController@addtask')->name('task.add');
 Route::get('/home/{userid}/{taskid}/delete', 'TodoController@destroy')->name('home.delete');
