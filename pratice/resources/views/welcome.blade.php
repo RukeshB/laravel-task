@@ -12,6 +12,7 @@
                     <th>Due Date</th>
                     <th>Task Completed</th>
                     <th>Total Task</th>
+                    <th>Percentage</th>
                     <th>Progress</th>
                 </thead>
                 <tbody>
@@ -45,7 +46,8 @@
                                     {{-- {{$g->task->todo->user_id->count()}} --}}
                                 </td>
                                     <td>{{$g->task->count()}}</td>
-                                    <td><progress value="{{$number/$task->count()*100}}" max="100"></progress></td>
+                                    <td>{{$number/$g->task->count()*100}}%</td>
+                                    <td><progress value="{{$number/$g->task->count()*100}}" max="100"></progress></td>
                                     @php
                                         $sn++;
                                     @endphp

@@ -31,7 +31,8 @@ class TodoController extends Controller
     {
         $task = Task::all();
         $todo = Todo::all();
-        return view('todo',compact('task','todo'));
+        $group = TaskGroup::all();
+        return view('todo',compact('task','todo','group'));
     }
 
     /**

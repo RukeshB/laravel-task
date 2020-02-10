@@ -1,14 +1,42 @@
 @extends('layouts.app')
 @section('content')
 
+    <div class="row d-flex justify-content-center">
         <h1>ToDO List</h1>
-        @foreach ($task as $t)
-            <input type="checkbox" name="task" id="task" value="{{$t->id}}" @foreach ($todo as $td)
-                @if(Auth::user()->id == $td->user_id && $t->id == $td->task_id)
-                    checked
-                @endif
-            @endforeach>{{$t->task}}<br>
-        @endforeach
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class=".container-fluid">
+            <table class="table">
+                <thead>
+                    @foreach ($group as $g)
+                        <th>{{$g->title}}</th>
+                    @endforeach
+
+                </thead>
+                    <tbody>
+                        @foreach ($group as $g)
+
+                            <td>
+                                @foreach ($task as $t)
+                                    @if($g->id == $t->taskgroup->id)
+                                        <input type="checkbox" name="task" id="task" value="{{$t->id}}" @foreach ($todo as $td)
+                                            @if(Auth::user()->id == $td->user_id && $t->id == $td->task_id)
+                                                checked
+                                            @endif
+                                        @endforeach>{{$t->task}}<br>
+                                    @endif
+
+                                @endforeach
+                            </td>
+
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
         {{-- <input type="checkbox" name="task" value="introduction" onclick="save('introduction')">introduction<br>
         <input type="checkbox" name="task" value="routing" onclick="save('routing')">routing<br>
         <input type="checkbox" name="task" value="controller" onclick="save('controller')">controller<br> --}}

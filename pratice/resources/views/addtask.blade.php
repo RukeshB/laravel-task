@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-
+<div class="row d-flex justify-content-center">
     <select name="group" id="group">
         @foreach ($group as $g)
             <option value="{{$g->id}}">{{$g->title}}</option>
@@ -9,24 +9,31 @@
     </select>
     <input type="text" name="newtask" id="newtask" required>
     <input type="submit" value="submit" id="submitbtn">
+</div>
 
-<table class="table" id="my_table">
-    <thead>
-        <th>S.N</th>
-        <th>Group</th>
-        <th>Task</th>
-    </thead>
-    <tbody>
-        @foreach ($task as $t)
-            <tr>
-                <input type="hidden" id="sn" value="{{$loop->count}}">
-                <td>{{$loop->iteration}}</td>
-                <td>{{$t->taskgroup->title}}</td>
-                <td>{{$t->task}}</td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
+
+<div class="row d-flex justify-content-center">
+    <div class=".container-fluid">
+        <table class="table" id="my_table">
+            <thead>
+                <th>S.N</th>
+                <th>Group</th>
+                <th>Task</th>
+            </thead>
+            <tbody>
+                @foreach ($task as $t)
+                    <tr>
+                        <input type="hidden" id="sn" value="{{$loop->count}}">
+                        <td>{{$loop->iteration}}</td>
+                        <td>{{$t->taskgroup->title}}</td>
+                        <td>{{$t->task}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <script>
     var button = document.getElementById('submitbtn');
     var newtask = document.getElementById('newtask');
