@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Todo;
 use App\Task;
+use App\TaskGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\carbon;
@@ -83,7 +84,8 @@ class TodoController extends Controller
     public function showaddtask()
     {
         $task = Task::all();
-        return view('addtask',\compact('task'));
+        $group = TaskGroup::all();
+        return view('addtask',\compact('task','group'));
     }
 
     public function addtask(Request $request)
@@ -91,6 +93,8 @@ class TodoController extends Controller
 
             $task = new Task();
             $task->task = $request->task;
+            $task->group_id = $request->group_id;
+            // return($request->group_id);
             $task->save();
 
             return \response()->json(['sucess'=>'done']);

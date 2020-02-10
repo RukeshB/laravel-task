@@ -8,6 +8,7 @@
                     <th>S.N</th>
                     <th>Name</th>
                     <th>Role</th>
+                    <th>Group</th>
                     <th>Task Completed</th>
                     <th>Total Task</th>
                     <th>Progress</th>
@@ -17,20 +18,40 @@
                      $sn=1;
                     @endphp
                     @foreach ($user as $u)
-                    @if ($u->role->name != "super_admin")
-                        <tr>
-                            <th>{{$sn}}</th>
-                            <th>{{$u->name}}</th>
-                            <th>{{$u->role->name}}</th>
-                            <th>{{$u->todo->count()}}</th>
-                            <th>{{$task->count()}}</th>
-                            <th><progress value="{{$u->todo->count()/$task->count()*100}}" max="100"></progress></th>
-                            @php
-                                $sn++;
-                            @endphp
-                        </tr>
+                        @foreach ($group as $g)
+                            @if ($u->role->name != "super_admin")
+                                <tr>
+                                    <th>{{$sn}}</th>
+                                    <th>{{$u->name}}</th>
+                                    <th>{{$u->role->name}}</th>
+                                    <th>{{$g->title}}</th>
+                                    <th>
+                                        @php
+                                            $number =0;
+                                        @endphp
+                                        @foreach ($u->todo as $todo)
 
-                    @endif
+                                        @if ($todo->task->group_id == $g->id)
+                                            @php
+                                                $number++;
+                                            @endphp
+                                        @endif
+
+                                    @endforeach
+                                    {{$number}}
+                                    {{-- {{$u->todo->where('user_id',$u->id)->count()}} --}}
+                                    {{-- {{$g->task->todo->user_id->count()}} --}}
+                                </th>
+                                    <th>{{$g->task->count()}}</th>
+                                    <th><progress value="{{$number/$task->count()*100}}" max="100"></progress></th>
+                                    @php
+                                        $sn++;
+                                    @endphp
+                                </tr>
+
+                            @endif
+                        @endforeach
+
 
                     @endforeach
                 </tbody>

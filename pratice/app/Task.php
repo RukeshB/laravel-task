@@ -14,4 +14,8 @@ protected $table= "tasklist";
            return $this->hasMany('App\Task', 'task_id');
        }
 
+    public function taskgroup()
+    {
+        return $this->belongsTo('App\TaskGroup', 'group_id');
+    }
 }

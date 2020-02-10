@@ -11,6 +11,7 @@ use App\Location;
 use App\Role;
 use App\Permission;
 use App\Task;
+use App\TaskGroup;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -37,7 +38,8 @@ class HomeController extends Controller
         //return view('welcome');
         $user = User::all();
         $task = Task::all();
-        return view('welcome',\compact('user','task'));
+        $group = TaskGroup::all();
+        return view('welcome',\compact('user','task','group'));
     }
 
     public function all()
