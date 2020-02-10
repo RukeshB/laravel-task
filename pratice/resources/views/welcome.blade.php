@@ -9,6 +9,7 @@
                     <th>Name</th>
                     <th>Role</th>
                     <th>Group</th>
+                    <th>Due Date</th>
                     <th>Task Completed</th>
                     <th>Total Task</th>
                     <th>Progress</th>
@@ -21,11 +22,12 @@
                         @foreach ($group as $g)
                             @if ($u->role->name != "super_admin")
                                 <tr>
-                                    <th>{{$sn}}</th>
-                                    <th>{{$u->name}}</th>
-                                    <th>{{$u->role->name}}</th>
-                                    <th>{{$g->title}}</th>
-                                    <th>
+                                    <td>{{$sn}}</td>
+                                    <td>{{$u->name}}</td>
+                                    <td>{{$u->role->name}}</td>
+                                    <td>{{$g->title}}</td>
+                                    <td>{{$g->due_date}}</td>
+                                    <td>
                                         @php
                                             $number =0;
                                         @endphp
@@ -41,9 +43,9 @@
                                     {{$number}}
                                     {{-- {{$u->todo->where('user_id',$u->id)->count()}} --}}
                                     {{-- {{$g->task->todo->user_id->count()}} --}}
-                                </th>
-                                    <th>{{$g->task->count()}}</th>
-                                    <th><progress value="{{$number/$task->count()*100}}" max="100"></progress></th>
+                                </td>
+                                    <td>{{$g->task->count()}}</td>
+                                    <td><progress value="{{$number/$task->count()*100}}" max="100"></progress></td>
                                     @php
                                         $sn++;
                                     @endphp

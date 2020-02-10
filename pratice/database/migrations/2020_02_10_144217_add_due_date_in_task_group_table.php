@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddGroupIdAndDueDateToTasklistTable extends Migration
+class AddDueDateInTaskGroupTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddGroupIdAndDueDateToTasklistTable extends Migration
      */
     public function up()
     {
-        Schema::table('tasklist', function (Blueprint $table) {
-            $table->bigInteger('group_id')->unsigned();
-            $table->foreign('group_id')->references('id')->on('task_group');
+        Schema::table('task_group', function (Blueprint $table) {
+            $table->date('due_date');
         });
     }
 
@@ -26,8 +25,8 @@ class AddGroupIdAndDueDateToTasklistTable extends Migration
      */
     public function down()
     {
-        Schema::table('tasklist', function (Blueprint $table) {
-
+        Schema::table('task_group', function (Blueprint $table) {
+            $table->dropColumn('due_date');
         });
     }
 }
