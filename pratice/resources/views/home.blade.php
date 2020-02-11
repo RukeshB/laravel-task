@@ -17,10 +17,10 @@
 
     <tbody>
         @php($i = 1)
-        @foreach ($user as $u)
+        @foreach ($user as  $key => $u)
         @if(Auth::user()->id != $u->id)
             <tr>
-                <td>{{$i}}</td>
+                <td>{{$key}}</td>
                 <td>{{$u->name}}</td>
                 <td>{{$u->gender}}</td>
                 <td>{{$u->dob}}</td>

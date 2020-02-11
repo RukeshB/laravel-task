@@ -18,4 +18,9 @@ protected $table= "tasklist";
     {
         return $this->belongsTo('App\TaskGroup', 'group_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User','user_id');
+    }
 }

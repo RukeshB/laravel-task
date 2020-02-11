@@ -64,12 +64,11 @@
 
                                 @endif
 
-
-
-                                <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('home.permissions') }}">Manage Permissions</a>
-                                </li>
-
+                                @if(Gate::allows('manage_permission',App\User::class))
+                                    <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('home.permissions') }}">Manage Permissions</a>
+                                    </li>
+                                @endif
                             @can('viewAny', App\User::class)
                                 <li class="nav-item">
                                         <a class="nav-link" href="{{ route('home.list') }}">{{ __('User Detail') }}</a>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Todo;
+use App\User;
 use App\Task;
 use App\TaskGroup;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +12,12 @@ use Carbon\carbon;
 
 class TodoController extends Controller
 {
+     public function __construct()
+    {
+        $this->middleware('auth');
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +36,6 @@ class TodoController extends Controller
     public function create()
     {
         $task = Task::all();
-        $todo = Todo::all();
         $group = TaskGroup::all();
         return view('todo',compact('task','todo','group'));
     }
@@ -43,64 +48,50 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-
+        //return ($request->check);
+        $task = Task::find($request->id);
         $condition =$request->check;
-        //return \response()->json(['sucess'=>'done']);
         if($condition == 'true')
         {
-            //return 'save';
-            $userid= Auth::User()->id;
-            $todo = new Todo();
-            $todo->user_id = $userid;
-            $todo->task_id = $request->task_id;
-            $todo->status = true;
-            $todo->submitted_at = Carbon::now();
-            $todo->save();
-            return \response()->json(['sucess'=>'done']);
+            $task->completed = true;
+            //$task->submitted_at = Carbon::now();
         }
 
-        // if($request->check === false)
         else
         {
-            //return 'delete';
-            //dd('delete');
-            $del = DB::delete('delete from todo where user_id = ? and task_id= ?', [Auth::User()->id,$request->task_id]);
-            return \response()->json(['sucess'=>'done']);
+           $task->completed = false;
         }
-
-        // $del = DB::delete('delete from todo where user_id = ?', [$userid]);
-        // foreach($request->task as $task)
-        // {
-        //     $todo = new Todo;
-        //     $todo->user_id = $userid;
-        //     $todo->task = $task;
-        //     $todo->status = 1;
-        //     $todo->submitted_at = Carbon::now();
-        //     $todo->save();
-        // }
-
-        // dd($todo);
+        $task->save();
+        return \response()->json(['sucess'=>'done']);
     }
 
     public function showaddtask()
     {
+        $user = User::all();
         $task = Task::all();
         $group = TaskGroup::all();
-        return view('addtask',\compact('task','group'));
+        return view('addtask',\compact('task','group','user'));
     }
 
     public function addtask(Request $request)
     {
 
             $task = new Task();
-            $task->task = $request->task;
-            $task->group_id = $request->group_id;
+            $task->task = $request->newtask;
+            $task->group_id = $request->group;
+            $task->description = $request->description;
+            $task->user_id = $request->userid;
             // return($request->group_id);
             $task->save();
 
-            return \response()->json(['sucess'=>'done']);
+            return \redirect()->route('task.manage');
     }
 
+    public function managetask()
+    {
+        $task= Task::all();
+        return view('managetask',\compact('task'));
+    }
 
     /**
      * Display the specified resource.

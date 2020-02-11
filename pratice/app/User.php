@@ -47,9 +47,9 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id');
     }
 
-    public function todo()
+    public function task()
     {
-        return $this->hasMany('App\Todo','user_id');
+        return $this->hasMany('App\Task','user_id');
     }
 
     public function hasAccess($permissions)

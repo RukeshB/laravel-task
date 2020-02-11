@@ -2,12 +2,10 @@
 
 @section('content')
         @if (Auth::user()->role->name == "super_admin")
-            <p>super_admin</p>
+        <h1 class="d-flex justify-content-center">Task Report</h1>
             <table class="table">
                 <thead>
                     <th>S.N</th>
-                    <th>Name</th>
-                    <th>Role</th>
                     <th>Group</th>
                     <th>Due Date</th>
                     <th>Task Completed</th>
@@ -16,48 +14,17 @@
                     <th>Progress</th>
                 </thead>
                 <tbody>
-                    @php
-                     $sn=1;
-                    @endphp
-                    @foreach ($user as $u)
-                        @foreach ($group as $g)
-                            @if ($u->role->name != "super_admin")
-                                <tr>
-                                    <td>{{$sn}}</td>
-                                    <td>{{$u->name}}</td>
-                                    <td>{{$u->role->name}}</td>
-                                    <td>{{$g->title}}</td>
-                                    <td>{{$g->due_date}}</td>
-                                    <td>
-                                        @php
-                                            $number =0;
-                                        @endphp
-                                        @foreach ($u->todo as $todo)
-
-                                        @if ($todo->task->group_id == $g->id)
-                                            @php
-                                                $number++;
-                                            @endphp
-                                        @endif
-
-                                    @endforeach
-                                    {{$number}}
-                                    {{-- {{$u->todo->where('user_id',$u->id)->count()}} --}}
-                                    {{-- {{$g->task->todo->user_id->count()}} --}}
-                                </td>
-                                    <td>{{$g->task->count()}}</td>
-                                    <td>{{$number/$g->task->count()*100}}%</td>
-                                    <td><progress value="{{$number/$g->task->count()*100}}" max="100"></progress></td>
-                                    @php
-                                        $sn++;
-                                    @endphp
-                                </tr>
-
-                            @endif
-                        @endforeach
-
-
-                    @endforeach
+                   @foreach ($group as $g)
+                       <tr>
+                            <td>{{$loop->iteration}}</td>
+                           <td>{{$g->title}}</td>
+                            <td>{{$g->due_date}}</td>
+                            <td>{{$g->task->where('completed',1)->count()}}</td>
+                            <td>{{$g->task->where('group_id',$g->id)->count()}}</td>
+                            <td>{{$g->task->where('completed',1)->count()/$g->task->where('group_id',$g->id)->count()*100}}%</td>
+                            <td><progress  max="100" value="{{$g->task->where('completed',1)->count()/$g->task->where('group_id',$g->id)->count()*100}}"></progress></td>
+                       </tr>
+                   @endforeach
                 </tbody>
             </table>
             @else{

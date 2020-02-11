@@ -35,4 +35,5 @@ Route::post('/home/task', 'TodoController@store')->name('home.donetask');
 Route::get('/home/task', 'TodoController@create')->name('home.task');
 
 Route::post('/task/add','TodoController@addtask')->name('task.add');
+Route::get('/task/manage','TodoController@managetask')->name('task.manage');
 Route::get('/home/{userid}/{taskid}/delete', 'TodoController@destroy')->name('home.task.delete');

@@ -15,15 +15,13 @@
                 </thead>
                     <tbody>
                         @foreach ($group as $g)
-
                             <td>
                                 @foreach ($task as $t)
-                                    @if($g->id == $t->taskgroup->id)
-                                        <input type="checkbox" name="task" id="task" value="{{$t->id}}" @foreach ($todo as $td)
-                                            @if(Auth::user()->id == $td->user_id && $t->id == $td->task_id)
+                                    @if($g->id == $t->taskgroup->id && Auth::User()->id == $t->user_id)
+                                        <input type="checkbox" name="task" id="task" value="{{$t->id}}"
+                                            @if($t->completed == 1)
                                                 checked
-                                            @endif
-                                        @endforeach>{{$t->task}}<br>
+                                            @endif>{{$t->task}}<br>
                                     @endif
 
                                 @endforeach
@@ -45,11 +43,6 @@
     src="{{asset('js/jquery.3.4.1.min.js')}}"></script>
   <script>
 
-        //   $('h1').click(function(){
-        //       $('h1').hide();
-        //   });
-
-            //checkbox = document.getElementById('task');
             var checkbox = document.querySelectorAll ('input[type=checkbox]');
             var length = checkbox.length;
 
@@ -79,7 +72,7 @@
             method:'POST',
             url:"{{route('home.donetask')}}",
             data:{
-                task_id: value,
+                id: value,
                 check : status
             },
             success:function(data){
