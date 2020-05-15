@@ -31,6 +31,7 @@ Route::post('/home/setpermissions','HomeController@setPermissions')->name('home.
 
 
 Route::get('/task/add', 'TodoController@showaddtask')->name('task.showaddtask');
+Route::get('/task/group/add', 'TodoController@showaddgroup')->name('task.showaddgroup');
 Route::post('/home/task', 'TodoController@store')->name('home.donetask');
 Route::get('/home/task', 'TodoController@create')->name('home.task');
 

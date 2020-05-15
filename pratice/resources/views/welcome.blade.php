@@ -18,7 +18,7 @@
                        <tr>
                             <td>{{$loop->iteration}}</td>
                            <td>{{$g->title}}</td>
-                            <td>{{$g->due_date}}</td>
+                            <td>{{\Carbon\Carbon::parse($g->due_date)->diffForHumans()}}</td>
                             <td>{{$g->task->where('completed',1)->count()}}</td>
                             <td>{{$g->task->where('group_id',$g->id)->count()}}</td>
                             <td>{{$g->task->where('completed',1)->count()/$g->task->where('group_id',$g->id)->count()*100}}%</td>
@@ -50,5 +50,21 @@
                 </div>
             }
         @endif
-
+        <script>
+            var role = @JSON($user[0]->role);
+            console.log(role);
+            for(var i=0;i<role.length;i++)
+            {
+                if(role['name'] != 'super_admin')
+                {
+                    console.log('not super admin');
+                    break;
+                }
+                else
+                {
+                    console.log('super_admin');
+                    break;
+                }
+            }
+        </script>
 @endsection

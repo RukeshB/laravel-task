@@ -53,14 +53,31 @@
                         @else
 
                                 @if (Auth::user()->role->name != 'super_admin')
-
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('home.task') }}">Task</a>
                                     </li>
                                     @else
-                                        <li class="nav-item">
-                                        <a class="nav-link" href="{{route('task.showaddtask')}}">Add Task</a>
-                                        </li>
+
+                                    {{-- Task DropDown --}}
+                                    <li class="nav-item dropdown">
+
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            Task<span class="caret"></span>
+                                        </a>
+
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                                            {{-- Add Task --}}
+                                            <a class="dropdown-item" href="{{route('task.showaddtask')}}">Add Task</a>
+
+                                            {{-- Add Group --}}
+                                            <a class="dropdown-item" href="{{route('task.showaddgroup')}}">Add Group</a>
+
+                                            {{-- Manage Task --}}
+                                            <a class="dropdown-item" href="{{route('task.manage')}}">Manage Task</a>
+                                        </div>
+
+                                    </li>
 
                                 @endif
 

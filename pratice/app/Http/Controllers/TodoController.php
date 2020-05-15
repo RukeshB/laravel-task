@@ -48,21 +48,31 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //return ($request->check);
+        //return (Task::find($request->id));
         $task = Task::find($request->id);
         $condition =$request->check;
-        if($condition == 'true')
+        //return (carbon::now());
+        if(Carbon::parse($task->taskgroup->due_date)->gte(carbon::now()->toDateString()) )//if now < due_date
         {
-            $task->completed = true;
-            //$task->submitted_at = Carbon::now();
-        }
+            //return 'due_date';
+            if($condition == 'true')
+            {
+                $task->completed = true;
+                //$task->submitted_at = Carbon::now();
+            }
 
+            else
+            {
+            $task->completed = false;
+            }
+            $task->save();
+            return \response()->json(['sucess'=>'done']);
+        }
         else
         {
-           $task->completed = false;
+            return 'now';
         }
-        $task->save();
-        return \response()->json(['sucess'=>'done']);
+
     }
 
     public function showaddtask()

@@ -21,6 +21,9 @@
                                         <input type="checkbox" name="task" id="task" value="{{$t->id}}"
                                             @if($t->completed == 1)
                                                 checked
+                                            @endif
+                                            @if(\Carbon\Carbon::parse($t->taskgroup->due_date)->lt(\Carbon\carbon::now()->toDateString()))
+                                               disabled
                                             @endif>{{$t->task}}<br>
                                     @endif
 
@@ -39,8 +42,7 @@
         <input type="checkbox" name="task" value="routing" onclick="save('routing')">routing<br>
         <input type="checkbox" name="task" value="controller" onclick="save('controller')">controller<br> --}}
 
-    <script
-    src="{{asset('js/jquery.3.4.1.min.js')}}"></script>
+    <script src="{{asset('js/jquery.3.4.1.min.js')}}"></script>
   <script>
 
             var checkbox = document.querySelectorAll ('input[type=checkbox]');
@@ -50,7 +52,7 @@
                 {
                     //checkbox[i].onclick()= save(checkbox[i].value,checkbox[i].checked);
                     checkbox[i].addEventListener("click", function(){
-                    console.log(length);
+
                     save(this.value,this.checked);
                     });
                 }
